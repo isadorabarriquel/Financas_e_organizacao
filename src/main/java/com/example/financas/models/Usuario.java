@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -14,8 +16,8 @@ public class Usuario {
     String nome;
     String email;
     String senhaHash;
-    String criadoEm;
-    String atualizadoEm;
+    LocalDateTime criadoEm;
+    LocalDateTime atualizadoEm;
 
     public UUID getId() {
         return id;
@@ -49,19 +51,19 @@ public class Usuario {
         this.senhaHash = senhaHash;
     }
 
-    public String getCriadoEm() {
+    public LocalDateTime getCriadoEm() {
         return criadoEm;
     }
 
-    public void setCriadoEm(String criadoEm) {
+    public void setCriadoEm(LocalDateTime criadoEm) {
         this.criadoEm = criadoEm;
     }
 
-    public String getAtualizadoEm() {
+    public LocalDateTime getAtualizadoEm() {
         return atualizadoEm;
     }
 
-    public void setAtualizadoEm(String atualizadoEm) {
+    public void setAtualizadoEm(LocalDateTime atualizadoEm) {
         this.atualizadoEm = atualizadoEm;
     }
 }

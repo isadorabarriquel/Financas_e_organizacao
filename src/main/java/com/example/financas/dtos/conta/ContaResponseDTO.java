@@ -1,6 +1,7 @@
 package com.example.financas.dtos.conta;
 
 import java.util.UUID;
+import java.time.LocalDateTime;
 
 public record ContaResponseDTO(
         UUID id,
@@ -9,8 +10,8 @@ public record ContaResponseDTO(
         String tipo,
         String moeda,
         Double saldo,
-        String criadoEm,
-        String atualizadoEm
+        LocalDateTime criadoEm,
+        LocalDateTime atualizadoEm
 ) {
 
 }

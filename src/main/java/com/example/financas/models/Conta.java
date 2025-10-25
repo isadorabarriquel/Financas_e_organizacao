@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.util.UUID;
+import java.time.LocalDateTime;
 
 @Entity
 public class Conta {
@@ -16,8 +17,8 @@ public class Conta {
     String tipo;
     String moeda;
     Double saldo;
-    String criadoEm;
-    String atualizadoEm;
+    LocalDateTime criadoEm;
+    LocalDateTime atualizadoEm;
 
     public UUID getId() {
         return id;
@@ -67,19 +68,19 @@ public class Conta {
         this.saldo = saldo;
     }
 
-    public String getCriadoEm() {
+    public LocalDateTime getCriadoEm() {
         return criadoEm;
     }
 
-    public void setCriadoEm(String criadoEm) {
+    public void setCriadoEm(LocalDateTime criadoEm) {
         this.criadoEm = criadoEm;
     }
 
-    public String getAtualizadoEm() {
+    public LocalDateTime getAtualizadoEm() {
         return atualizadoEm;
     }
 
-    public void setAtualizadoEm(String atualizadoEm) {
+    public void setAtualizadoEm(LocalDateTime atualizadoEm) {
         this.atualizadoEm = atualizadoEm;
     }
 }

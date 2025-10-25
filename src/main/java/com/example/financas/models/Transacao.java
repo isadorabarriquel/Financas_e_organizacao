@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -16,10 +18,10 @@ public class Transacao {
     UUID categoriaId;
     String tipo;
     Double valor;
-    String data;
+    LocalDateTime data;
     String descricao;
-    String criadoEm;
-    String atualizadoEm;
+    LocalDateTime criadoEm;
+    LocalDateTime atualizadoEm;
 
     public UUID getId() {
         return id;
@@ -69,11 +71,11 @@ public class Transacao {
         this.valor = valor;
     }
 
-    public String getData() {
+    public LocalDateTime getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(LocalDateTime data) {
         this.data = data;
     }
 
@@ -85,19 +87,19 @@ public class Transacao {
         this.descricao = descricao;
     }
 
-    public String getCriadoEm() {
+    public LocalDateTime getCriadoEm() {
         return criadoEm;
     }
 
-    public void setCriadoEm(String criadoEm) {
+    public void setCriadoEm(LocalDateTime criadoEm) {
         this.criadoEm = criadoEm;
     }
 
-    public String getAtualizadoEm() {
+    public LocalDateTime getAtualizadoEm() {
         return atualizadoEm;
     }
 
-    public void setAtualizadoEm(String atualizadoEm) {
+    public void setAtualizadoEm(LocalDateTime atualizadoEm) {
         this.atualizadoEm = atualizadoEm;
     }
 }

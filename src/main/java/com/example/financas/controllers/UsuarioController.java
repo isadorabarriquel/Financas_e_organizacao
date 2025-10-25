@@ -10,11 +10,17 @@ import java.util.List;
 @RequestMapping("/usuarios")
 public class UsuarioController {
 
+    private final UsuarioService usuarioService;
+
+    public UsuarioController(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
+
     @GetMapping
     public List<UsuarioResponseDTO> getAllUsuarios(
             @RequestParam(defaultValue = "0") int paginaAtual,
             @RequestParam(defaultValue = "10") int tamanhoPagina
     ) {
-        return UsuarioService.getAllUsuarios(paginaAtual, tamanhoPagina);
+        return usuarioService.getAllUsuarios(paginaAtual, tamanhoPagina);
     }
 }

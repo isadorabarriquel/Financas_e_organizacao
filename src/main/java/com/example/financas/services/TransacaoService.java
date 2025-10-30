@@ -1,4 +1,6 @@
 package com.example.financas.services;
+import com.example.financas.dtos.conta.ContaRequestDTO;
+import com.example.financas.dtos.conta.ContaResponseDTO;
 import com.example.financas.dtos.transacao.TransacaoRequestDTO;
 import com.example.financas.dtos.transacao.TransacaoResponseDTO;
 import com.example.financas.mappers.ContaMapper;
@@ -47,5 +49,23 @@ public class TransacaoService {
         transacao.setDescricao(dto.descricao());
         Transacao save = repositorioTransacao.save(transacao);
         return transacaoMapper.toDto(save);
+    }
+
+    public TransacaoResponseDTO updateTransacao(UUID id, TransacaoRequestDTO dto) {
+        Transacao transacao = repositorioTransacao.findById(id)
+                .orElseThrow(() -> new RuntimeException("Transação não encontrada com o ID: " + id));
+
+        transacao.setValor(dto.valor());
+        transacao.setDescricao(dto.descricao());
+
+        Transacao updated = repositorioTransacao.save(transacao);
+        return transacaoMapper.toDto(updated);
+    }
+
+    public void deleteTransacao(UUID id) {
+        if (!repositorioTransacao.existsById(id)) {
+            throw new RuntimeException("Transação não encontrada com o ID: " + id);
+        }
+        repositorioTransacao.deleteById(id);
     }
 }

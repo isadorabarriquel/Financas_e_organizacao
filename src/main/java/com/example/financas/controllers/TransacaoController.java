@@ -43,4 +43,9 @@ public class TransacaoController {
         return transacaoService.updateTransacao(id, dto);
     }
 
+    @DeleteMapping("/{id}")
+    public void deleteTransacao(@PathVariable UUID id) {
+        transacaoService.deleteTransacao(id);
+    }
+
 }

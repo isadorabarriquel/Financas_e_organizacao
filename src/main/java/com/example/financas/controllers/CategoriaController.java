@@ -20,13 +20,15 @@ public class CategoriaController {
     @GetMapping
     public List<CategoriaResponseDTO> getAllCategorias(
             @RequestParam(defaultValue = "0") int paginaAtual,
-            @RequestParam(defaultValue = "10") int tamanhoPagina
+            @RequestParam(defaultValue = "10") int tamanhoPagina,
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) String tipo
     ){
-        return categoriaService.getAllCategorias(paginaAtual, tamanhoPagina);
+        return categoriaService.getAllCategorias(paginaAtual, tamanhoPagina, nome, tipo);
     }
 
     @PostMapping
-    public CategoriaResponseDTO updateCategoria(@RequestBody CategoriaRequestDTO dto){
+    public CategoriaResponseDTO createCategoria(@RequestBody CategoriaRequestDTO dto){
         return categoriaService.createCategoria(dto);
     }
 

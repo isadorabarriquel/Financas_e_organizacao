@@ -6,6 +6,7 @@ import com.example.financas.dtos.transacao.TransacaoRequestDTO;
 import com.example.financas.dtos.transacao.TransacaoResponseDTO;
 import com.example.financas.services.TransacaoService;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,9 +24,13 @@ public class TransacaoController {
     @GetMapping
     public List<TransacaoResponseDTO> getAllTransacoes(
             @RequestParam(defaultValue = "0") int paginaAtual,
-            @RequestParam(defaultValue = "10") int tamanhoPagina
+            @RequestParam(defaultValue = "10") int tamanhoPagina,
+            @RequestParam(required = false) String tipo,
+            @RequestParam(required = false) UUID contaId,
+            @RequestParam(required = false) UUID categoriaId,
+            @RequestParam(required = false) UUID usuarioId
     ) {
-        return transacaoService.getAllTransacoes(paginaAtual, tamanhoPagina);
+        return transacaoService.getAllTransacoes(paginaAtual, tamanhoPagina, tipo, contaId, categoriaId, usuarioId);
     }
 
     @GetMapping("/{id}")

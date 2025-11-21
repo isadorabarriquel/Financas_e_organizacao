@@ -18,22 +18,35 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @Service
 public class CategoriaService {
     private final RepositorioCategoria repositorioCategoria;
-    private CategoriaMapper categoriaMapper;
+    /*private CategoriaMapper categoriaMapper;*/
 
-    public CategoriaService(
-            RepositorioCategoria repositorioCategoria
-    ) {
+    public CategoriaService(RepositorioCategoria repositorioCategoria) {
         this.repositorioCategoria = repositorioCategoria;
     }
 
-    public List<CategoriaResponseDTO> getAllCategorias(int paginaAtual, int tamanhoPagina) {
-        Pageable pageable = PageRequest.of(paginaAtual, tamanhoPagina, Sort.by("nome"));
+    public List<CategoriaResponseDTO> getAllCategorias(
+            int paginaAtual,
+            int tamanhoPagina,
+            String nome,
+            String tipo) {
+        Pageable pageable = PageRequest.of(paginaAtual, tamanhoPagina, Sort.by("nome").ascending());
         Page<Categoria> page = repositorioCategoria.findAll(pageable);
-        return page.stream().map(CategoriaMapper::toDto).toList();
+
+        Stream<Categoria> stream = page.stream();
+
+        if (tipo != null && !tipo.isBlank()) {
+            String tipoUpper = tipo.toUpperCase();
+            stream = stream.filter(c -> c.getTipo() != null && c.getTipo().toUpperCase().equals(tipoUpper));
+        }
+
+        return stream
+                .map(CategoriaMapper::toDto)
+                .toList();
     }
 
     public CategoriaResponseDTO createCategoria(CategoriaRequestDTO dto) {
@@ -43,7 +56,7 @@ public class CategoriaService {
         categoria.setCriadoEm(java.time.LocalDateTime.now());
         categoria.setAtualizadoEm(java.time.LocalDateTime.now());
         Categoria save = repositorioCategoria.save(categoria);
-        return categoriaMapper.toDto(save);
+        return CategoriaMapper.toDto(save);
     }
 
     public CategoriaResponseDTO updateCategoria(UUID id, CategoriaRequestDTO dto) {
@@ -55,7 +68,7 @@ public class CategoriaService {
         categoria.setAtualizadoEm(java.time.LocalDateTime.now());
 
         Categoria updated = repositorioCategoria.save(categoria);
-        return categoriaMapper.toDto(updated);
+        return CategoriaMapper.toDto(updated);
     }
 
     public void deleteCategoria(UUID id) {

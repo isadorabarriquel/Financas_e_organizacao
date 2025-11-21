@@ -21,9 +21,11 @@ public class ContaController {
     @GetMapping
     public List<ContaResponseDTO> getAllContas(
             @RequestParam(defaultValue = "0") int paginaAtual,
-            @RequestParam(defaultValue = "10") int tamanhoPagina
+            @RequestParam(defaultValue = "10") int tamanhoPagina,
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) String tipo
     ) {
-        return contaService.getAllContas(paginaAtual, tamanhoPagina);
+        return contaService.getAllContas(paginaAtual, tamanhoPagina, nome, tipo);
     }
 
     @GetMapping("/{id}")

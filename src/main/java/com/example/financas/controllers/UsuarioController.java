@@ -3,6 +3,8 @@ package com.example.financas.controllers;
 import com.example.financas.dtos.usuario.UsuarioRequestDTO;
 import com.example.financas.dtos.usuario.UsuarioResponseDTO;
 import com.example.financas.services.UsuarioService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,33 +21,38 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public List<UsuarioResponseDTO> getAllUsuarios(
+    public ResponseEntity<List<UsuarioResponseDTO>> getAllUsuarios(
             @RequestParam(defaultValue = "0") int paginaAtual,
             @RequestParam(defaultValue = "10") int tamanhoPagina,
             @RequestParam(required = false) String nome
     ) {
-        return usuarioService.getAllUsuarios(paginaAtual, tamanhoPagina, nome);
+        List<UsuarioResponseDTO> usuarios =  usuarioService.getAllUsuarios(paginaAtual, tamanhoPagina, nome);
+        return ResponseEntity.ok(usuarios);
     }
 
     @GetMapping("/{id}")
-    public UsuarioResponseDTO getUsuarioPorId(@PathVariable UUID id) {
-        return usuarioService.getUsuarioPorId(id);
+    public ResponseEntity<UsuarioResponseDTO> getUsuarioPorId(@PathVariable UUID id) {
+        UsuarioResponseDTO usuario =  usuarioService.getUsuarioPorId(id);
+        return ResponseEntity.ok(usuario);
     }
 
     @PostMapping
-    public UsuarioResponseDTO createUsuario(@RequestBody UsuarioRequestDTO dto) {
-        return usuarioService.createUsuario(dto);
+    public ResponseEntity<UsuarioResponseDTO> createUsuario(@RequestBody UsuarioRequestDTO dto) {
+        UsuarioResponseDTO novoUsuario =  usuarioService.createUsuario(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
     }
 
-    public UsuarioResponseDTO updateUsuario(
+    public ResponseEntity<UsuarioResponseDTO> updateUsuario(
             @PathVariable UUID id,
             @RequestBody UsuarioRequestDTO dto
     ) {
-        return usuarioService.updateUsuario(id, dto);
+        UsuarioResponseDTO usuarioAlterado =  usuarioService.updateUsuario(id, dto);
+        return ResponseEntity.ok(usuarioAlterado);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUsuario(@PathVariable UUID id) {
+    public ResponseEntity<Void> deleteUsuario(@PathVariable UUID id) {
         usuarioService.deleteUsuario(id);
+        return ResponseEntity.noContent().build();
     }
 }

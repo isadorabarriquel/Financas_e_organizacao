@@ -28,6 +28,10 @@ public class CategoriaController {
     ){
         List<CategoriaResponseDTO> categorias =
                 categoriaService.getAllCategorias(paginaAtual, tamanhoPagina, nome, tipo);
+
+        if (categorias.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
         return ResponseEntity.ok(categorias);
     }
 

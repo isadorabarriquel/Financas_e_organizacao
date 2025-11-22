@@ -1,8 +1,5 @@
 package com.example.financas.controllers;
 
-import com.example.financas.dtos.categoria.CategoriaResponseDTO;
-import com.example.financas.dtos.conta.ContaRequestDTO;
-import com.example.financas.dtos.conta.ContaResponseDTO;
 import com.example.financas.dtos.transacao.TransacaoRequestDTO;
 import com.example.financas.dtos.transacao.TransacaoResponseDTO;
 import com.example.financas.services.TransacaoService;
@@ -34,6 +31,9 @@ public class TransacaoController {
     ) {
         List<TransacaoResponseDTO> transacoes =  transacaoService.getAllTransacoes(
                 paginaAtual, tamanhoPagina, tipo, contaId, categoriaId, usuarioId);
+        if (transacoes.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
         return ResponseEntity.ok(transacoes);
     }
 

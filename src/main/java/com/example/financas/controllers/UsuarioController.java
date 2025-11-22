@@ -27,6 +27,10 @@ public class UsuarioController {
             @RequestParam(required = false) String nome
     ) {
         List<UsuarioResponseDTO> usuarios =  usuarioService.getAllUsuarios(paginaAtual, tamanhoPagina, nome);
+
+        if (usuarios.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
         return ResponseEntity.ok(usuarios);
     }
 
@@ -42,6 +46,7 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
     }
 
+    @PutMapping("/{id}")
     public ResponseEntity<UsuarioResponseDTO> updateUsuario(
             @PathVariable UUID id,
             @RequestBody UsuarioRequestDTO dto

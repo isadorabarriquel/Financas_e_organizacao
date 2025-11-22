@@ -2,7 +2,6 @@ package com.example.financas.controllers;
 
 import com.example.financas.dtos.conta.ContaRequestDTO;
 import com.example.financas.dtos.conta.ContaResponseDTO;
-import com.example.financas.dtos.usuario.UsuarioResponseDTO;
 import com.example.financas.services.ContaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +28,10 @@ public class ContaController {
             @RequestParam(required = false) String tipo
     ) {
         List<ContaResponseDTO> contas = contaService.getAllContas(paginaAtual, tamanhoPagina, nome, tipo);
+
+        if (contas.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
         return ResponseEntity.ok(contas);
     }
 

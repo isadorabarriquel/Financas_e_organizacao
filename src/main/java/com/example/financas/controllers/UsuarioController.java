@@ -1,5 +1,6 @@
 package com.example.financas.controllers;
 
+import com.example.financas.dtos.usuario.UsuarioNotificacaoRequestDTO;
 import com.example.financas.dtos.usuario.UsuarioRequestDTO;
 import com.example.financas.dtos.usuario.UsuarioResponseDTO;
 import com.example.financas.services.UsuarioService;
@@ -53,6 +54,15 @@ public class UsuarioController {
     ) {
         UsuarioResponseDTO usuarioAlterado =  usuarioService.updateUsuario(id, dto);
         return ResponseEntity.ok(usuarioAlterado);
+    }
+
+    @PutMapping("/{id}/resumo-mensal")
+    public ResponseEntity<UsuarioResponseDTO> atualizaPreferenciaRelatorioMensal(
+            @PathVariable UUID id,
+            @RequestBody UsuarioNotificacaoRequestDTO dto
+    ) {
+        UsuarioResponseDTO usuario = usuarioService.preferenciaRelatorioMensal(id, dto);
+        return ResponseEntity.ok(usuario);
     }
 
     @DeleteMapping("/{id}")

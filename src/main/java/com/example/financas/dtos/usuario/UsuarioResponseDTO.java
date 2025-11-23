@@ -7,6 +7,7 @@ public record UsuarioResponseDTO(
         String nome,
         String email,
         LocalDateTime criadoEm,
-        LocalDateTime atualizadoEm
+        LocalDateTime atualizadoEm,
+        Boolean resumoMensal
 ) {
 }

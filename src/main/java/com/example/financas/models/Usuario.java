@@ -18,6 +18,7 @@ public class Usuario {
     String senhaHash;
     LocalDateTime criadoEm;
     LocalDateTime atualizadoEm;
+    boolean resumoMensal = true;
 
     public UUID getId() {
         return id;
@@ -66,4 +67,9 @@ public class Usuario {
     public void setAtualizadoEm(LocalDateTime atualizadoEm) {
         this.atualizadoEm = atualizadoEm;
     }
+
+    public boolean isResumoMensal() {return resumoMensal;}
+
+    public void setResumoMensal(boolean resumoMensal) {this.resumoMensal = resumoMensal;}
+
 }

@@ -1,5 +1,6 @@
 package com.example.financas.services;
 
+import com.example.financas.dtos.usuario.UsuarioNotificacaoRequestDTO;
 import com.example.financas.dtos.usuario.UsuarioRequestDTO;
 import com.example.financas.dtos.usuario.UsuarioResponseDTO;
 import com.example.financas.mappers.UsuarioMapper;
@@ -73,6 +74,18 @@ public class UsuarioService {
 
         Usuario atualizado = repositorioUsuario.save(usuario);
         return UsuarioMapper.toDto(atualizado);
+    }
+
+    public UsuarioResponseDTO preferenciaRelatorioMensal(UUID id, UsuarioNotificacaoRequestDTO dto){
+        Usuario usuario = repositorioUsuario.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário " + id + "não encontrado."));
+
+        if (dto.resumoMensal() != null) {
+            usuario.setResumoMensal(dto.resumoMensal());
+        }
+
+        Usuario salvo = repositorioUsuario.save(usuario);
+        return UsuarioMapper.toDto(salvo);
     }
 
     public void deleteUsuario(UUID id) {

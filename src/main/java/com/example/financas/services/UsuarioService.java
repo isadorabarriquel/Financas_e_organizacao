@@ -53,6 +53,7 @@ public class UsuarioService {
     }
 
     public UsuarioResponseDTO createUsuario(UsuarioRequestDTO dto) {
+        validarEmailUnico(dto.email());
         Usuario usuario = new Usuario();
 
         usuario.setNome(dto.nome());
@@ -94,4 +95,11 @@ public class UsuarioService {
         }
         repositorioUsuario.deleteById(id);
     }
+
+    private void validarEmailUnico(String email) {
+        if (repositorioUsuario.existsByEmail(email)) {
+            throw new RuntimeException("Já existe um usuário cadastrado com este e-mail.");
+        }
+    }
+
 }

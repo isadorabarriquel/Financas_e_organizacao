@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 
+import java.math.BigDecimal;
+
 public record ContaRequestDTO(
 
         @NotBlank(message = "O nome da conta é obrigatório")
@@ -17,5 +19,5 @@ public record ContaRequestDTO(
 
         @NotNull(message = "O saldo inicial é obrigatório")
         @PositiveOrZero(message = "O saldo inicial não pode ser negativo")
-        Double saldo
+        BigDecimal saldo
 ) {}

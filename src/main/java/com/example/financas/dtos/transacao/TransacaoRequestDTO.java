@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.Pattern;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -27,7 +28,7 @@ public record TransacaoRequestDTO(
 
         @NotNull(message = "Valor é obrigatório")
         @Positive(message = "Valor deve ser positivo")
-        Double valor,
+        BigDecimal valor,
 
         @NotNull(message = "A data é obrigatória")
         LocalDateTime data,

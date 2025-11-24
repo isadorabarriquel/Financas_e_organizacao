@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+
+import java.math.BigDecimal;
 import java.util.UUID;
 import java.time.LocalDateTime;
 
@@ -16,7 +18,7 @@ public class Conta {
     String nome;
     String tipo;
     String moeda;
-    Double saldo;
+    BigDecimal saldo;
     LocalDateTime criadoEm;
     LocalDateTime atualizadoEm;
 
@@ -60,11 +62,11 @@ public class Conta {
         this.moeda = moeda;
     }
 
-    public Double getSaldo() {
+    public BigDecimal getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(Double saldo) {
+    public void setSaldo(BigDecimal saldo) {
         this.saldo = saldo;
     }
 

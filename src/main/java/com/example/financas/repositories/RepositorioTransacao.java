@@ -13,5 +13,8 @@ public interface RepositorioTransacao extends JpaRepository<Transacao, UUID> {
             LocalDateTime inicio,
             LocalDateTime fim
     );
+    boolean existsByCategoriaId(UUID categoriaId);
+
+    boolean existsByContaId(UUID contaId);
 
 }

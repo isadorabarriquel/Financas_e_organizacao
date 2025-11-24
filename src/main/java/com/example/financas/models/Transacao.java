@@ -1,10 +1,8 @@
 package com.example.financas.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -14,14 +12,16 @@ public class Transacao {
     @GeneratedValue(strategy = GenerationType.UUID)
     UUID id;
     UUID usuarioId;
-    UUID contaId;
     UUID categoriaId;
     String tipo;
-    Double valor;
+    BigDecimal valor;
     LocalDateTime data;
     String descricao;
     LocalDateTime criadoEm;
     LocalDateTime atualizadoEm;
+    @ManyToOne
+    @JoinColumn(name = "contaId")
+    private Conta conta;
 
     public UUID getId() {
         return id;
@@ -39,12 +39,12 @@ public class Transacao {
         this.usuarioId = usuarioId;
     }
 
-    public UUID getContaId() {
-        return contaId;
+    public Conta getConta() {
+        return conta;
     }
 
-    public void setContaId(UUID contaId) {
-        this.contaId = contaId;
+    public void setConta(Conta conta) {
+        this.conta = conta;
     }
 
     public UUID getCategoriaId() {
@@ -63,11 +63,11 @@ public class Transacao {
         this.tipo = tipo;
     }
 
-    public Double getValor() {
+    public BigDecimal getValor() {
         return valor;
     }
 
-    public void setValor(Double valor) {
+    public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
 

@@ -10,6 +10,7 @@ import com.example.financas.models.Categoria;
 import com.example.financas.models.Conta;
 import com.example.financas.repositories.RepositorioCategoria;
 import com.example.financas.repositories.RepositorioConta;
+import com.example.financas.repositories.RepositorioTransacao;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,7 @@ import java.util.stream.Stream;
 @Service
 public class CategoriaService {
     private final RepositorioCategoria repositorioCategoria;
+    private RepositorioTransacao repositorioTransacao;
     /*private CategoriaMapper categoriaMapper;*/
 
     public CategoriaService(RepositorioCategoria repositorioCategoria) {
@@ -72,10 +74,20 @@ public class CategoriaService {
     }
 
     public void deleteCategoria(UUID id) {
-        if (!repositorioCategoria.existsById(id)) {
-            throw new RuntimeException("Categoria não encontrada com o ID: " + id);
+
+        Categoria categoria = repositorioCategoria.findById(id)
+                .orElseThrow(() -> new RuntimeException("Categoria não encontrada com o ID: " + id));
+
+        boolean existeTransacaoComCategoria = repositorioTransacao.existsByCategoriaId(id);
+
+        if (existeTransacaoComCategoria) {
+            throw new RuntimeException(
+                    "A categoria não pode ser excluída pois está sendo usada em transações."
+            );
         }
+
         repositorioCategoria.deleteById(id);
     }
+
 }
 

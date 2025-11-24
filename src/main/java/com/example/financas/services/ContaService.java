@@ -5,6 +5,7 @@ import com.example.financas.dtos.conta.ContaResponseDTO;
 import com.example.financas.mappers.ContaMapper;
 import com.example.financas.models.Conta;
 import com.example.financas.repositories.RepositorioConta;
+import com.example.financas.repositories.RepositorioTransacao;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,19 +18,21 @@ import java.util.stream.Stream;
 
 @Service
 public class ContaService {
+
     private final RepositorioConta repositorioConta;
-    /*private ContaMapper contaMapper;*/
+    private final RepositorioTransacao repositorioTransacao;
 
     public ContaService(
-            RepositorioConta repositorioConta
+            RepositorioConta repositorioConta,
+            RepositorioTransacao repositorioTransacao
     ) {
         this.repositorioConta = repositorioConta;
+        this.repositorioTransacao = repositorioTransacao;
     }
 
     public List<ContaResponseDTO> getAllContas(int paginaAtual, int tamanhoPagina, String nome, String tipo) {
         Pageable pageable = PageRequest.of(paginaAtual, tamanhoPagina, Sort.by("nome").ascending());
         Page<Conta> page = repositorioConta.findAll(pageable);
-        /*return page.stream().map(ContaMapper::toDto).toList();*/
 
         Stream<Conta> stream = page.stream();
 
@@ -38,6 +41,7 @@ public class ContaService {
             stream = stream.filter(c -> c.getNome() != null &&
                     c.getNome().toUpperCase().contains(nomeUpper));
         }
+
         return stream
                 .map(ContaMapper::toDto)
                 .toList();
@@ -74,9 +78,17 @@ public class ContaService {
     }
 
     public void deleteConta(UUID id) {
+
         if (!repositorioConta.existsById(id)) {
             throw new RuntimeException("Conta não encontrada com o ID: " + id);
         }
+
+        boolean possuiTransacoes = repositorioTransacao.existsByContaId(id);
+        if (possuiTransacoes) {
+            throw new RuntimeException("A conta não pode ser excluída pois possui transações vinculadas.");
+        }
+
         repositorioConta.deleteById(id);
     }
+
 }

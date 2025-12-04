@@ -7,7 +7,7 @@ A API permite o gerenciamento de transações financeiras (receitas e despesas),
 
 ## Descrição do Projeto
 
-O objetivo do projeto é fornecer uma API robusta para o gerenciamento financeiro pessoal, permitindo:
+O objetivo do projeto é fornecer uma API para o gerenciamento financeiro pessoal, permitindo:
 
 - Cadastro de usuários
 - Criação de contas e categorias

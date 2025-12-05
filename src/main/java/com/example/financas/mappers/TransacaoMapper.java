@@ -6,13 +6,17 @@ import com.example.financas.models.Transacao;
 public class TransacaoMapper {
 
     public static TransacaoResponseDTO toDto(Transacao t) {
+
+
+        Double valor = t.getValor() != null ? t.getValor().doubleValue() : null;
+
         return new TransacaoResponseDTO(
                 t.getId(),
                 t.getUsuarioId(),
-                t.getContaId(),
+                t.getConta() != null ? t.getConta().getId() : null,
                 t.getCategoriaId(),
                 t.getTipo(),
-                t.getValor(),
+                valor,
                 t.getData(),
                 t.getDescricao(),
                 t.getCriadoEm(),

@@ -7,6 +7,7 @@ import com.example.financas.repositories.RepositorioUsuario;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -30,7 +31,6 @@ public class ResumoMensalService {
         this.emailService = emailService;
     }
 
-    // seg - min - hora - dia_do_mes - mes -dia_da_semana
     @Scheduled(cron = "0 0 8 1 * *")
     public void enviarRelatoriosMensais() {
 
@@ -45,7 +45,6 @@ public class ResumoMensalService {
         List<Usuario> usuarios = repositorioUsuario.findAll();
 
         for (Usuario usuario : usuarios) {
-            //envia p quem ativou o resumo
             if (!usuario.isResumoMensal()) {
                 continue;
             }
@@ -55,7 +54,6 @@ public class ResumoMensalService {
 
             UUID usuarioId = usuario.getId();
 
-            //busca as transac. do mes anterior por usuario
             List<Transacao> transacoes = repositorioTransacao
                     .findByUsuarioIdAndDataBetween(usuarioId, inicio, fim);
 
@@ -63,14 +61,14 @@ public class ResumoMensalService {
                 continue;
             }
 
-            //agrupa por id de categ. e soma valores
-            Map<UUID, Double> gastosPorCategoria = transacoes.stream()
+
+            Map<UUID, BigDecimal> gastosPorCategoria = transacoes.stream()
                     .collect(Collectors.groupingBy(
                             Transacao::getCategoriaId,
                             Collectors.reducing(
-                                    0.0,             // valor inic.
+                                    BigDecimal.ZERO,
                                     Transacao::getValor,
-                                    Double::sum
+                                    BigDecimal::add
                             )
                     ));
 

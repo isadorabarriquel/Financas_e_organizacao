@@ -31,9 +31,9 @@ public class ResumoMensalService {
         this.emailService = emailService;
     }
 
-    @Scheduled(cron = "0 0 8 1 * *")
+    @Scheduled(cron = "0 * * * * *")
     public void enviarRelatoriosMensais() {
-
+        System.out.println("[ResumoMensal] Rodando em: " + LocalDateTime.now());
         LocalDate hoje = LocalDate.now();
 
         LocalDate inicioMesAnterior = hoje.minusMonths(1).withDayOfMonth(1);
